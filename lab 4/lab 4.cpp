@@ -17,18 +17,17 @@ struct graf {
 
 void deep(int** a, int num, int* versh, int size) {
 	versh[num] = 1;
-	cout << num << " -> ";
+	cout << "   " << num << " -> ";
 
 	for (int i = 0; i < size; i++) {
 		if (a[num][i] != 0 && versh[i] != 1)
 			deep(a, i, versh, size);
 	}
-
 }
 void deepDarkAss(graf* grafon, int num, int* versh){
 	versh[num] = 1;
 	node* buf = grafon->nodes[num];
-	cout << num  << " -> ";
+	cout << "   " << num << " -> ";
 	
 	while (buf != NULL) {
 		if (versh[buf->numb] == 0)
@@ -36,19 +35,37 @@ void deepDarkAss(graf* grafon, int num, int* versh){
 		buf = buf->next;
 	}
  }
-void norec(graf* grafon, int num, int* versh, int size) {
-	// auto stack = new int(size);
+
+void norec(int** a, int num, int* versh, int size) {
+	stack <int> steck;
+	versh[num] = 1;
+	cout << "   " << num << " -> ";
+	steck.push(num);
+	int q, i=0;
+	while (!steck.empty()) {
+		for (i; i < size; i++) {
+			if (a[num][i] != 0 && versh[i] != 1) {
+				cout << i << " -> ";
+				steck.push(i);
+				versh[i] = 1;
+				i = -1;
+			}
+		}
+		i = 0;
+		num = steck.top();
+		steck.pop();
+	}
+}
+
+void norec_cunt_fuck(graf* grafon, int num, int* versh, int size) {
 	stack <int> steck;
 	versh[num] = 1;
 	node* buf = grafon->nodes[num];
-	cout << num << " -> ";
+	cout << "   " << num << " -> ";
 	steck.push(num);
 	int q;
 	while (!steck.empty()) {
-
-	
 		buf = grafon->nodes[num];
-		//num = buf->numb;
 			while (buf != 0) {
 				if (versh[buf->numb] == 0) {
 					cout << buf->numb << " -> ";
@@ -64,6 +81,7 @@ void norec(graf* grafon, int num, int* versh, int size) {
 		steck.pop();
 	}
 }
+
 graf* sozdat(int versh) {
 
 	graf* grafon = new graf;
@@ -109,116 +127,54 @@ srand(time(0));
 setlocale (LC_ALL, "Russian");
 int size;
 
-//cout <<  "¬ведите размерность матрицы"<< " ";
-//cin >> size;
-//cout << endl;
-//
-//int** arr = new int* [size];
-//
-//for (int count = 0; count < size; ++count)
-//    arr[count] = new int[size];
-//
-//for(int row = 0;row< size;row++){
-//	arr[row][row] = 0;
-//	for(int col = row+1;col< size;col++){
-//		arr[row][col] = rand()%2;
-//		arr [col][row] = arr[row][col];
-//	}
-//}
-//
-//for(int row = 0;row < size;row++){
-//	for(int col = 0; col < size;col++){
-//cout << arr[row][col] << " " ;
-//		}
-//cout<<endl;
-//	}
-//
-//system("pause");
-//
-//auto versh = new int[size];
-//for (int i = 0; i < size; i++)
-//	versh[i] = 0;
-//cout << "  ¬ведите номер вершины? с которой хотите начать обход " << endl;
-//int num;
-//cin >> num;
-//
-//deep(arr, num, versh, size);
-//cout << endl;
-//for (int i = 0; i < size; i++)
-//	delete (arr[i]);
-//delete (arr);
-//delete (versh);
-//system("pause");
-//
-//cout << endl << " ќбход в глубину списков смежности" << endl;
-//
-//cout << "¬ведите размерность матрицы" << " ";
-//cin >> size;
-//cout << endl;
-//
-// arr = new int* [size];
-//
-//for (int count = 0; count < size; ++count)
-//	arr[count] = new int[size];
-//
-//for (int row = 0; row < size; row++) {
-//	arr[row][row] = 0;
-//	for (int col = row + 1; col < size; col++) {
-//		arr[row][col] = rand() % 2;
-//		arr[col][row] = arr[row][col];
-//	}
-//}
-//
-//for (int row = 0; row < size; row++) {
-//	for (int col = 0; col < size; col++) {
-//		cout << arr[row][col] << " ";
-//	}
-//	cout << endl;
-//}
-//
-//
-//graf* grafon = sozdat(size);
-//int j = 1;
-//for (int i = 0; i < size; i++) {
-//	for (j; j < size; j++) {
-//		if (arr[i][j] == 1) {
-//			addgran(grafon, i, j);
-//		}
-//	}
-//	j = j - size + i + 1;
-//}
-//for (int i = 0; i < size; i++) {
-//	node* temp = grafon->nodes[i];
-//	cout << i << " ";
-//
-//	while (temp) {
-//		cout << "->" << temp->numb;
-//		temp = temp->next;
-//	}
-//	cout << endl;
-//}
-//system("pause");
-//
-//
-//for (int i = 0; i < size; i++)
-//	versh[i] = 0;
-//cout << "  ¬ведите номер вершины? с которой хотите начать обход " << endl;
-// num = 0;
-//cin >> num;
-//
-//deepDarkAss(grafon, num, versh);
-//for (int i = 0; i < size; i++)
-//	delete (arr[i]);
-//delete (arr);
-//system("pause");
-//
-
-cout << endl << "ќбход в глубину не рекурсивным спсобом";
-cout <<  "¬ведите размерность матрицы"<< " ";
+cout << "   ¬ведите размерность матрицы: "<< " ";
 cin >> size;
 cout << endl;
 
-auto arr = new int* [size];
+int** arr = new int* [size];
+
+for (int count = 0; count < size; ++count)
+    arr[count] = new int[size];
+
+for(int row = 0;row< size;row++){
+	arr[row][row] = 0;
+	for(int col = row+1;col< size;col++){
+		arr[row][col] = rand()%2;
+		arr [col][row] = arr[row][col];
+	}
+}
+cout << "   ";
+for(int row = 0;row < size;row++)
+{
+	for(int col = 0; col < size;col++){
+cout << arr[row][col] << " " ;
+	}
+cout << endl << "   ";
+}
+cout << endl;
+
+auto versh = new int[size];
+for (int i = 0; i < size; i++)
+	versh[i] = 0;
+cout << "   ¬ведите номер вершины, с которой хотите начать обход: ";
+int num;
+cin >> num;
+cout << endl;
+
+deep(arr, num, versh, size);
+cout << endl;
+for (int i = 0; i < size; i++)
+	delete (arr[i]);
+delete (arr);
+delete (versh);
+
+
+cout << endl << "   ќбход в глубину списков смежности" << endl;
+cout << "   ¬ведите размерность матрицы: " << " ";
+cin >> size;
+cout << endl;
+
+ arr = new int* [size];
 
 for (int count = 0; count < size; ++count)
 	arr[count] = new int[size];
@@ -230,13 +186,15 @@ for (int row = 0; row < size; row++) {
 		arr[col][row] = arr[row][col];
 	}
 }
-
+cout << "   ";
 for (int row = 0; row < size; row++) {
 	for (int col = 0; col < size; col++) {
 		cout << arr[row][col] << " ";
 	}
-	cout << endl;
+	cout << endl << "   ";
 }
+
+cout << endl;
 
 graf* grafon = sozdat(size);
 int j = 1;
@@ -248,32 +206,103 @@ for (int i = 0; i < size; i++) {
 	}
 	j = j - size + i + 1;
 }
+cout << "   ";
 for (int i = 0; i < size; i++) {
 	node* temp = grafon->nodes[i];
 	cout << i << " ";
 
 	while (temp) {
-		cout << "->" << temp->numb;
+		cout << " -> " << temp->numb;
 		temp = temp->next;
 	}
-	cout << endl;
+	cout << endl << "   ";
 }
-system("pause");
 
-auto versh = new int[size];
 for (int i = 0; i < size; i++)
 	versh[i] = 0;
-cout << "  ¬ведите номер вершины? с которой хотите начать обход " << endl;
-int num = 0;
+cout << endl << "   ¬ведите номер вершины, с которой хотите начать обход: ";
+ num = 0;
+cin >> num;
+
+deepDarkAss(grafon, num, versh);
+for (int i = 0; i < size; i++)
+	delete (arr[i]);
+delete (arr);
+
+
+cout << endl << "   ќбход в глубину нерекурсивным способом матриц" << endl;
+cout << "   ¬ведите размерность матрицы: " << " ";
+cin >> size;
+cout << endl;
+
+arr = new int* [size];
+
+for (int count = 0; count < size; ++count)
+	arr[count] = new int[size];
+
+for (int row = 0; row < size; row++) {
+	arr[row][row] = 0;
+	for (int col = row + 1; col < size; col++) {
+		arr[row][col] = rand() % 2;
+		arr[col][row] = arr[row][col];
+	}
+}
+cout << "   ";
+for (int row = 0; row < size; row++) {
+	for (int col = 0; col < size; col++) {
+		cout << arr[row][col] << " ";
+	}
+	cout << endl << "   ";
+}
+
+cout << endl;
+
+versh = new int[size];
+for (int i = 0; i < size; i++)
+	versh[i] = 0;
+cout << endl << "   ¬ведите номер вершины, с которой хотите начать обход: ";
+num = 0;
 cin >> num;
 
 auto stack = new int(size);
 
-norec(grafon, num, versh, size);
-//versh[num] = 1;
-//node* buf = grafon->nodes[num];
-//cout << num << " -> ";
-//stack[0] = buf->numb;
+norec(arr, num, versh, size);
 
+cout << endl;
+cout << endl;
+
+grafon = sozdat(size);
+j = 1;
+for (int i = 0; i < size; i++) {
+	for (j; j < size; j++) {
+		if (arr[i][j] == 1) {
+			addgran(grafon, i, j);
+		}
+	}
+	j = j - size + i + 1;
+}
+cout << "   ";
+for (int i = 0; i < size; i++) {
+	node* temp = grafon->nodes[i];
+	cout << i;
+
+	while (temp) {
+		cout << " -> " << temp->numb;
+		temp = temp->next;
+	}
+	cout << endl << "   ";
+}
+
+versh = new int[size];
+for (int i = 0; i < size; i++)
+	versh[i] = 0;
+cout << endl << "   ќбход в глубину нерекурсивным способом списков смежности" << endl;
+cout << endl << "   ¬ведите номер вершины, с которой хотите начать обход: ";
+num = 0;
+cin >> num;
+
+stack = new int(size);
+
+norec_cunt_fuck(grafon, num, versh, size);
 
 }
