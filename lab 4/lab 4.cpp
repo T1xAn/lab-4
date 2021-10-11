@@ -36,7 +36,28 @@ void deepDarkAss(graf* grafon, int num, int* versh){
 	}
  }
 
-void norec(graf* grafon, int num, int* versh, int size) {
+void norec(int** a, int num, int* versh, int size) {
+	stack <int> steck;
+	versh[num] = 1;
+	cout << "   " << num << " -> ";
+	steck.push(num);
+	int q, i=0;
+	while (!steck.empty()) {
+		for (i; i < size; i++) {
+			if (a[num][i] != 0 && versh[i] != 1) {
+				cout << i << " -> ";
+				steck.push(i);
+				versh[i] = 1;
+				i = -1;
+			}
+		}
+		i = 0;
+		num = steck.top();
+		steck.pop();
+	}
+}
+
+void norec_cunt_fuck(graf* grafon, int num, int* versh, int size) {
 	stack <int> steck;
 	versh[num] = 1;
 	node* buf = grafon->nodes[num];
@@ -209,7 +230,7 @@ for (int i = 0; i < size; i++)
 delete (arr);
 
 
-cout << endl << "   ќбход в глубину нерекурсивным способом " << endl;
+cout << endl << "   ќбход в глубину нерекурсивным способом матриц" << endl;
 cout << "   ¬ведите размерность матрицы: " << " ";
 cin >> size;
 cout << endl;
@@ -234,6 +255,20 @@ for (int row = 0; row < size; row++) {
 	cout << endl << "   ";
 }
 
+cout << endl;
+
+versh = new int[size];
+for (int i = 0; i < size; i++)
+	versh[i] = 0;
+cout << endl << "   ¬ведите номер вершины, с которой хотите начать обход: ";
+num = 0;
+cin >> num;
+
+auto stack = new int(size);
+
+norec(arr, num, versh, size);
+
+cout << endl;
 cout << endl;
 
 grafon = sozdat(size);
@@ -261,12 +296,13 @@ for (int i = 0; i < size; i++) {
 versh = new int[size];
 for (int i = 0; i < size; i++)
 	versh[i] = 0;
+cout << endl << "   ќбход в глубину нерекурсивным способом списков смежности" << endl;
 cout << endl << "   ¬ведите номер вершины, с которой хотите начать обход: ";
 num = 0;
 cin >> num;
 
-auto stack = new int(size);
+stack = new int(size);
 
-norec(grafon, num, versh, size);
+norec_cunt_fuck(grafon, num, versh, size);
 
 }
