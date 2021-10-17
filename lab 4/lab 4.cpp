@@ -17,7 +17,7 @@ struct graf {
 
 void deep(int** a, int num, int* versh, int size) {
 	versh[num] = 1;
-	cout << "   " << num << " -> ";
+	cout << num << " -> ";
 
 	for (int i = 0; i < size; i++) {
 		if (a[num][i] != 0 && versh[i] != 1)
@@ -27,7 +27,7 @@ void deep(int** a, int num, int* versh, int size) {
 void deepDarkAss(graf* grafon, int num, int* versh){
 	versh[num] = 1;
 	node* buf = grafon->nodes[num];
-	cout << "   " << num << " -> ";
+	cout << num << " -> ";
 	
 	while (buf != NULL) {
 		if (versh[buf->numb] == 0)
@@ -138,7 +138,7 @@ cout << endl;
 int** arr = new int* [size];
 
 for (int count = 0; count < size; ++count)
-    arr[count] = new int[size];
+	arr[count] = new int[size];
 
 for(int row = 0;row< size;row++){
 	arr[row][row] = 0;
@@ -163,16 +163,12 @@ for (int i = 0; i < size; i++)
 cout << "   ¬ведите номер вершины, с которой хотите начать обход: ";
 int num;
 cin >> num;
-cout << endl;
+cout << endl << "   ";
 
 deep(arr, num, versh, size);
-cout << endl;
 
-
-cout << endl << "   ќбход в глубину списков смежности" << endl;
-cout << endl;
-cout << "   ";
-cout << endl;
+cout << endl << endl << "   ќбход в глубину списков смежности" << endl;
+cout << "   " << endl;
 
 graf* grafon = sozdat(size);
 int j = 1;
@@ -187,7 +183,7 @@ for (int i = 0; i < size; i++) {
 cout << "   ";
 for (int i = 0; i < size; i++) {
 	node* temp = grafon->nodes[i];
-	cout << i << " ";
+	cout << i;
 
 	while (temp) {
 		cout << " -> " << temp->numb;
@@ -201,25 +197,22 @@ for (int i = 0; i < size; i++)
 cout << endl << "   ¬ведите номер вершины, с которой хотите начать обход: ";
  num = 0;
 cin >> num;
-
+cout << endl << "   ";
 deepDarkAss(grafon, num, versh);
 
-
-cout << endl << "   ќбход в глубину нерекурсивным способом матриц" << endl;
-cout << endl;
-cout << endl;
+cout << endl << endl << "   ќбход в глубину нерекурсивным способом матриц" << endl;
 
 for (int i = 0; i < size; i++)
 	versh[i] = 0;
 cout << endl << "   ¬ведите номер вершины, с которой хотите начать обход: ";
 num = 0;
 cin >> num;
+cout << endl;
 
 auto stack = new int(size);
 
 norec(arr, num, versh, size);
 
-cout << endl;
 cout << endl;
 
 for (int i = 0; i < size; i++)
@@ -228,9 +221,10 @@ cout << endl << "   ќбход в глубину нерекурсивным способом списков смежности" <<
 cout << endl << "   ¬ведите номер вершины, с которой хотите начать обход: ";
 num = 0;
 cin >> num;
+cout << endl;
 
 stack = new int(size);
 
 norec_cunt_fuck(grafon, num, versh, size);
-
+cout << endl;
 }
